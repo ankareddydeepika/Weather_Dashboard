@@ -1,29 +1,48 @@
+//Global Variable for storing searches
+var savedSearches = new Array();
+//when refreshing
+var a = localStorage.getItem("lastsearcheditem")
+if (a !== "") {
+    search(a)
+}
+//populate prevous searches
+function populatePreviousSearches(){
+    if (savedSearches.length === 9) {
+        savedSearches.shift()
+    }
+    savedSearches.push($("#search-term").val().trim());
+    for(i=0; i<savedSearches.length; i++){
+
+        $("#previous-searches").prepend("<br><hr>" + savedSearches[i]);
+    } 
+}
+function clear() {
+    $("#previous-searches").empty()
+    $("#Weather-forecaste").empty()
+    $("#fivedayforecaste").empty()
+}
 //daily weather URL
 
-function buildQueryUrl() {
+function buildQueryUrl(searchterm) {
 
     var queryUrl = "https://api.openweathermap.org/data/2.5/weather?";
 
     var queryParameters = { "appid": "0a0a4078e577711da637196946879a75" };
 
-    queryParameters.q = $("#search-term")
-        .val()
-        .trim();
+    queryParameters.q = searchterm
     //   console.log(queryUrl + $.param(queryParameters));
     return (queryUrl + $.param(queryParameters));
 }
 
 //five day forecast URL
 
-function buildForecastUrl() {
+function buildForecastUrl(searchterm) {
 
     var queryUrl = "http://api.openweathermap.org/data/2.5/forecast?";
 
     var queryParameters = { "appid": "0a0a4078e577711da637196946879a75" };
-    console.log($("#search-term"))
-    queryParameters.q = $("#search-term")
-        .val()
-        .trim();
+    console.log(searchterm)
+    queryParameters.q = searchterm
 
     return (queryUrl + $.param(queryParameters));
 
@@ -32,7 +51,6 @@ function buildForecastUrl() {
 
 //Coverting date
 function convertDate(unixtimestamp) {
-
     var date = new Date(unixtimestamp * 1000);
     var month = date.getMonth() + 1;
     var day = date.getDate();
@@ -41,14 +59,20 @@ function convertDate(unixtimestamp) {
     return output;
 
 }
-
-$("#searchbtn").on("click", function () {
-
-    var weatherUrl = buildQueryUrl();
-    var forecasteUrl = buildForecastUrl();
+// Creating function to search, while clicking search icon
+function search(searchterm){
+    clear()
+    
+    localStorage.setItem("lastsearcheditem", searchterm)
+    var weatherUrl = buildQueryUrl(searchterm);
+    var forecasteUrl = buildForecastUrl(searchterm);
     console.log(weatherUrl);
     console.log(forecasteUrl);
+    populatePreviousSearches();
 
+
+
+//Current weather forecaste
     $.ajax({
         url: weatherUrl,
         method: "GET"
@@ -60,8 +84,9 @@ $("#searchbtn").on("click", function () {
         <p style="font-size:20px">Humidity: ${response.main.humidity}%<p/>
         <p Style="font-size:20px">Wind Speed: ${response.wind.speed}MPH<p/>
         `);
-    })
 
+    })
+//Five day forecaste
     $.ajax({
         url: forecasteUrl,
         method: "GET"
@@ -91,6 +116,12 @@ $("#searchbtn").on("click", function () {
         }
 
     })
+}
+
+$("#searchbtn").on("click", function () {
+    
+search($("#search-term").val().trim())
+
 
 });
 
