@@ -9,6 +9,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="style.css" />
 
 </head>
 
@@ -26,29 +27,54 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="search-term">
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
+                        <button class="btn btn-secondary" id="searchbtn" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
                 </div>
                 <div class="mt-7" id="previous-searches">
-                        <!--Searches go here-->
+                    <!--Searches go here-->
                 </div>
             </div>
             <div class="col-sm-9">
-                <div class="card-body" id="Weather-forecaste"> 
-                       <!--Weather forecaste goes here-->
+                <div class="card">
+                    <div class="card-body" id="Weather-forecaste">
+                        <!--Weather forcast goes here-->
+                    </div>
+                    
                 </div>
+                        <div class="card-deck" id="fivedayforecaste">
+                            <!-- <div class="card">
+                                <div class="card-body">
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                </div>
+                            </div> -->
+                        </div>
 
             </div>
-
         </div>
-    </div>
 
 
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-    <script src="nytCode.js"></script>
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="script.js"></script>
 
 </body>
 
