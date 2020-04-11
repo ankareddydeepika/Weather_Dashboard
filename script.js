@@ -30,6 +30,7 @@ function buildQueryUrl(searchterm) {
     var queryParameters = { "appid": "0a0a4078e577711da637196946879a75" };
 
     queryParameters.q = searchterm
+    queryParameters.units="imperial"
     //   console.log(queryUrl + $.param(queryParameters));
     return (queryUrl + $.param(queryParameters));
 }
@@ -43,9 +44,24 @@ function buildForecastUrl(searchterm) {
     var queryParameters = { "appid": "0a0a4078e577711da637196946879a75" };
     console.log(searchterm)
     queryParameters.q = searchterm
+    queryParameters.units="imperial"
 
     return (queryUrl + $.param(queryParameters));
 
+}
+
+//UV URL
+
+function buildUVurl(lati,long){
+
+    var queryUrl = "http://api.openweathermap.org/data/2.5/uvi?";
+
+    var queryParameters = {"appid":"0a0a4078e577711da637196946879a75"};
+
+    queryParameters.lat = lati
+    queryParameters.lon = long
+
+    return(queryUrl + $.param(queryParameters));
 }
 
 
@@ -66,8 +82,10 @@ function search(searchterm){
     localStorage.setItem("lastsearcheditem", searchterm)
     var weatherUrl = buildQueryUrl(searchterm);
     var forecasteUrl = buildForecastUrl(searchterm);
+    
     console.log(weatherUrl);
     console.log(forecasteUrl);
+
     populatePreviousSearches();
 
 
@@ -77,7 +95,7 @@ function search(searchterm){
         url: weatherUrl,
         method: "GET"
     }).then(response => {
-
+console.log(response)
         $("#Weather-forecaste").prepend(`
         <h1>${response.name} (${convertDate(response.dt)})<h1/>
         <p style="font-size:20px">Temperature: ${response.main.temp}<p/>
@@ -85,7 +103,48 @@ function search(searchterm){
         <p Style="font-size:20px">Wind Speed: ${response.wind.speed}MPH<p/>
         `);
 
+        //UV
+        var UVUrl = buildUVurl(response.coord.lat, response.coord.lon);
+        $.ajax({
+            url: UVUrl,
+            method: "GET"
+        }).then(response =>{
+    
+            var uvValue = response.value
+
+            var background;
+
+            if(uvValue === 3 || uvValue <= 5){
+
+                background = "yellow";
+            }
+            else if(uvValue === 6 || uvValue <= 7){
+
+                background = "orange";
+            }
+            else if(uvValue === 8 || uvValue <= 10){
+
+                background = "red";
+            }
+            else{
+
+                background = "violet";
+            }
+            
+            $("#Weather-forecaste").append(`
+            <div class="card" style="width: 8rem" >
+            <div class="card-body"  style="background-color: ${background}"><p Style="font-size:20px">UV: ${uvValue} <p/>
+            </div>
+            </div>
+            `);
+
+            
+        })
+
     })
+   
+
+
 //Five day forecaste
     $.ajax({
         url: forecasteUrl,
@@ -117,6 +176,8 @@ function search(searchterm){
 
     })
 }
+
+
 
 $("#searchbtn").on("click", function () {
     
