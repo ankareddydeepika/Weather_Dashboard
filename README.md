@@ -22,6 +22,6 @@ API used: http://api.openweathermap.org/data/2.5/forecast?
          https://api.openweathermap.org/data/2.5/weather?
          http://api.openweathermap.org/data/2.5/uvi?
 
-Application Link:  
+Application Link:   https://ankareddydeepika.github.io/Weather_Dashboard/
 
 ![weatherdashboard](./Assets/Weather_dashboard.gif)
