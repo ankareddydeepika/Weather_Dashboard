@@ -44,7 +44,7 @@ function buildQueryUrl(searchterm) {
 
 function buildForecastUrl(searchterm) {
 
-    var queryUrl = "http://api.openweathermap.org/data/2.5/forecast?";
+    var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?";
 
     var queryParameters = { "appid": "0a0a4078e577711da637196946879a75" };
     console.log(searchterm)
@@ -59,7 +59,7 @@ function buildForecastUrl(searchterm) {
 
 function buildUVurl(lati, long) {
 
-    var queryUrl = "http://api.openweathermap.org/data/2.5/uvi?";
+    var queryUrl = "https://api.openweathermap.org/data/2.5/uvi?";
 
     var queryParameters = { "appid": "0a0a4078e577711da637196946879a75" };
 
@@ -170,7 +170,7 @@ function search(searchterm) {
                 <div class="card"><div/>
                 <div class="card-body" style="background-color:grey">
                 <h4>${convertDate(weather.dt)}<h4/>
-                <img src="http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png"></img>
+                <img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png"></img>
                 <p style="font-size:20px">Temperature: ${weather.main.temp}<p/>
                 <p style="font-size:20px">Humidity: ${weather.main.humidity}%<p/>
                 </div>             
